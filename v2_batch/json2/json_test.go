@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"testing"
 
-	"bitbucket.org/mosscube/live/util/gorilla/rpc/v2_batch"
+	"github.com/jason-xxl/rpc/v2_batch"
 )
 
 // ResponseRecorder is an implementation of http.ResponseWriter that

@@ -13,7 +13,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"bitbucket.org/mosscube/live/util/gorilla/rpc/v2_batch"
+	"github.com/jason-xxl/rpc/v2_batch"
 )
 
 var ErrResponseError = errors.New("response error")

@@ -12,7 +12,7 @@ import (
 
 	"bytes"
 
-	"bitbucket.org/mosscube/live/util/gorilla/rpc/v2_batch"
+	"github.com/jason-xxl/rpc/v2_batch"
 )
 
 var null = json.RawMessage([]byte("null"))
@@ -107,6 +107,7 @@ func (c *Codec) WriteBatchedReply(r *http.Request, w http.ResponseWriter, replyA
 // newCodecRequest returns a new CodecRequest.
 func newCodecRequest(r *http.Request, encoder rpc.Encoder) ([]rpc.CodecRequest, error) {
 
+	//jason:
 	body_, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil || body_ == nil || len(body_) < 2 { // think of "[]" or "{}"
@@ -151,7 +152,7 @@ func newCodecRequest(r *http.Request, encoder rpc.Encoder) ([]rpc.CodecRequest, 
 				Data:    req,
 			}
 		}
-		codecRequestArray[i] = &CodecRequest{request: &req, err: err, encoder: encoder, body: body_}
+		codecRequestArray[i] = &CodecRequest{request: &reqArray[i], err: err, encoder: encoder, body: body_}
 	}
 
 	return codecRequestArray, nil
@@ -163,7 +164,8 @@ type CodecRequest struct {
 	request *serverRequest
 	err     error
 	encoder rpc.Encoder
-	body    []byte
+	//Jason
+	body []byte
 }
 
 // Method returns the RPC method for the current request.
@@ -176,8 +178,13 @@ func (c *CodecRequest) Method() (string, error) {
 	return "", c.err
 }
 
+//Jason
 func (c *CodecRequest) Body() []byte {
 	return c.body
+}
+
+func (c *CodecRequest) Error() error {
+	return c.err
 }
 
 // ReadRequest fills the request object for the RPC method.

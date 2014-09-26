@@ -20,8 +20,8 @@ Let's setup a server and register a codec and service:
 
 	import (
 		"http"
-		"bitbucket.org/mosscube/live/util/gorilla/rpc/v2"
-		"bitbucket.org/mosscube/live/util/gorilla/rpc/v2/json"
+		"github.com/jason-xxl/rpc/v2"
+		"github.com/jason-xxl/rpc/v2/json"
 	)
 
 	func init() {

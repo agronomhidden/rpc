@@ -12,6 +12,8 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
+
+	"github.com/kr/pretty"
 )
 
 // ----------------------------------------------------------------------------
@@ -32,14 +34,16 @@ type CodecRequest interface {
 	// Reads the request filling the RPC method args.
 	ReadRequest(interface{}) error
 	// Writes the response using the RPC method reply.
-	WriteResponse(http.ResponseWriter, interface{})
+	//WriteResponse(http.ResponseWriter, interface{})
 	// Writes an error produced by the server.
-	WriteError(w http.ResponseWriter, status int, err error)
+	//WriteError(w http.ResponseWriter, status int, err error)
 
 	ErrorReply(err error) interface{}
 	ResponseReply(reply interface{}) interface{}
 
+	//Jason: extended for auth check
 	Body() []byte
+	Error() error
 }
 
 // ----------------------------------------------------------------------------
@@ -143,6 +147,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// if queryCount > 1 && i == 0 {
 		// 	w.Write([]byte("["))
 		// }
+		errParse := codecReq.Error()
+		if errParse != nil {
+			codecRepArray[i] = codecReq.ErrorReply(errParse)
+			continue
+		}
 
 		// Get service method to be called.
 		method, errMethod := codecReq.Method()
@@ -165,6 +174,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		//Jason: restore body for further auth check
 		r.Body = nopCloser{bytes.NewBuffer(codecReq.Body())}
 
 		// Call the service method.
@@ -188,11 +198,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		} else {
 			codecRepArray[i] = codecReq.ErrorReply(errResult)
 		}
-
 	}
 
 	codec.WriteBatchedReply(r, w, codecRepArray)
 
+	pretty.Logln("ServeHTTP", codecReqArray, codecRepArray)
 }
 
 func WriteError(w http.ResponseWriter, status int, msg string) {
