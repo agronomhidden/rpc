@@ -1,4 +1,4 @@
-(This fork implements batched query in JsonRpc spec V2. Check out the folder named "v2_batch". You should be able to enable the batched query support by changing the import path from "gorilla/rpc/v2" to "jason-xxl/rpc/v2_batch" in your code.)
+(This fork implements batched query in JsonRpc spec V2 based on Gorilla's rpc module. Check out the folder named "v2_batch". You should be able to enable the batched query support by changing the import path from "gorilla/rpc/v2" to "jason-xxl/rpc/v2_batch" in your code.)
 
 rpc
 ===
