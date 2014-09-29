@@ -146,13 +146,17 @@ func newCodecRequest(r *http.Request, encoder rpc.Encoder) ([]rpc.CodecRequest, 
 
 	for i, req := range reqArray {
 		if req.Version != Version {
-			err = &Error{
+			err := &Error{
 				Code:    E_INVALID_REQ,
 				Message: "jsonrpc must be " + Version,
 				Data:    req,
 			}
+			codecRequestArray[i] = &CodecRequest{request: &reqArray[i], err: err, encoder: encoder, body: body_}
+
+		} else {
+			codecRequestArray[i] = &CodecRequest{request: &reqArray[i], err: nil, encoder: encoder, body: body_}
+
 		}
-		codecRequestArray[i] = &CodecRequest{request: &reqArray[i], err: err, encoder: encoder, body: body_}
 	}
 
 	return codecRequestArray, nil
