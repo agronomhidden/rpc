@@ -12,8 +12,6 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
-
-	"github.com/kr/pretty"
 )
 
 // ----------------------------------------------------------------------------
@@ -201,8 +199,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	codec.WriteBatchedReply(r, w, codecRepArray)
-
-	pretty.Logln("ServeHTTP", codecReqArray, codecRepArray)
 }
 
 func WriteError(w http.ResponseWriter, status int, msg string) {
