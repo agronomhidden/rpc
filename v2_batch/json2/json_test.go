@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/jason-xxl/rpc/v2_batch"
+	"github.com/agronomhidden/rpc/v2_batch"
 )
 
 // ResponseRecorder is an implementation of http.ResponseWriter that

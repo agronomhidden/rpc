@@ -13,7 +13,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/jason-xxl/rpc"
+	"github.com/agronomhidden/rpc"
 )
 
 var ErrResponseError = errors.New("response error")

@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/jason-xxl/rpc/v2"
+	"github.com/agronomhidden/rpc/v2"
 )
 
 var null = json.RawMessage([]byte("null"))
